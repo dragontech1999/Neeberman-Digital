@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neeberman Digital — Indie games & apps</title>
-<meta name="description" content="Neeberman Digital makes indie Android games and apps. Free games, no ads, made with care. Pawjong, Explojong, Skull Splode, WhoGave, AirFry+, PewPew! and Alex Is Gone.">
+<meta name="description" content="Neeberman Digital makes indie Android games and apps. Free games, no ads, made with care. Out now: Pawjong, Explojong, Road Rage, Skull Splode, WhoGave and AirFry+. Wet paint: Ovi, Fieldspeak, EVP Bench, Vigil, PewPew! and Alex Is Gone.">
 <meta property="og:title" content="Neeberman Digital — Indie games & apps">
 <meta property="og:description" content="Free games. No ads. Made with care.">
 <meta property="og:image" content="https://www.pastaamasta.com/assets/og-cover.jpg">
@@ -172,6 +172,7 @@
   .card::after { right: 30px; transform: rotate(6deg); }
   .card.wide { grid-template-columns: 1fr; }
   .card.wide .media { order: 0 !important; }
+  .card, .card > .info, .card > .media { min-width: 0; }
 
   .media { display: flex; gap: 18px; align-items: flex-end; }
   .phone {
@@ -188,6 +189,7 @@
     box-shadow: 0 0 0 3px var(--c), 12px 14px 0 rgba(0,0,0,.6); background: #000;
   }
   .screen-wide video { width: 100%; height: 100%; object-fit: cover; }
+  .screen-wide.slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .rec {
     position: absolute; top: 12px; left: 12px; z-index: 2; font: 700 12px/1 "Space Grotesk", sans-serif; letter-spacing: .1em;
     background: rgba(0,0,0,.65); color: #fff; padding: 6px 9px; border-radius: 4px;
@@ -220,7 +222,7 @@
   .btn.ghost { background: transparent; color: var(--text); border-color: var(--text); box-shadow: 5px 5px 0 var(--c); }
   .small-link { font-size: 14px; color: var(--muted); text-decoration: underline; text-decoration-color: var(--c); text-underline-offset: 4px; }
 
-  .shots { display: flex; gap: 10px; overflow-x: auto; padding: 4px 4px 12px; scrollbar-width: thin; scrollbar-color: var(--c) transparent; }
+  .shots { display: flex; gap: 10px; overflow-x: auto; max-width: 100%; padding: 4px 4px 12px; scrollbar-width: thin; scrollbar-color: var(--c) transparent; }
   .shots button {
     flex: none; padding: 0; border: 3px solid #000; background: none; cursor: zoom-in; border-radius: 8px; overflow: hidden;
     transition: transform .15s; box-shadow: 3px 3px 0 var(--c);
@@ -235,8 +237,38 @@
   #skullsplode { --c: var(--lime); --c2: var(--cyan); }
   #whogave { --c: #00b3c4; --c2: #ef4249; }
   #airfry { --c: var(--yellow); --c2: var(--pink); }
+  #roadrage { --c: var(--red); --c2: var(--yellow); }
   #pewpew { --c: var(--purple); --c2: var(--lime); }
   #alexisgone { --c: var(--red); --c2: var(--purple); }
+  #ovi { --c: #f0c36a; --c2: #d6453d; --tilt: -.6deg; }
+  #fieldspeak { --c: #b6e37a; --c2: #e6b15a; --tilt: .5deg; }
+  #evpbench { --c: #12a0c8; --c2: #e8c46a; --tilt: .4deg; }
+  #vigil { --c: #e8c46a; --c2: #c9903a; --tilt: -.4deg; }
+
+  .paint-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 42px 28px; margin: 0 0 70px; }
+  .paint {
+    --c: var(--yellow); --c2: #fff;
+    position: relative; background: var(--ink-2); border: 4px solid #000; border-radius: 6px;
+    padding: 28px 24px 22px; box-shadow: 10px 10px 0 var(--c); scroll-margin-top: 100px;
+    transform: rotate(var(--tilt, -.5deg));
+    opacity: 0; translate: 0 40px; scale: 1.04; transition: opacity .6s, translate .6s cubic-bezier(.2,1.4,.4,1), scale .6s;
+  }
+  .paint.in { opacity: 1; translate: 0 0; scale: 1; }
+  .paint::before, .paint::after {
+    content: ""; position: absolute; width: 90px; height: 26px; background: rgba(255,255,255,.22); top: -14px;
+  }
+  .paint::before { left: 22px; transform: rotate(-8deg); }
+  .paint::after { right: 22px; transform: rotate(6deg); }
+  .paint .head { display: flex; align-items: center; gap: 16px; }
+  .paint .head img.icon {
+    width: 74px; height: 74px; border-radius: 18px; border: 4px solid #fff; transform: rotate(-5deg);
+    box-shadow: 5px 5px 0 var(--c); flex: none; background: #000;
+  }
+  .paint h3 {
+    margin: 0; font-family: Bungee, sans-serif; font-weight: 400; font-size: clamp(26px, 3vw, 36px); line-height: 1;
+    color: var(--c); text-shadow: 3px 3px 0 #000;
+  }
+  .paint p { color: var(--muted); margin: 14px 0 0; }
 
   .drive { margin-top: 18px; border: 4px solid #000; border-radius: 10px; overflow: hidden; box-shadow: 6px 6px 0 var(--c2); max-width: 640px; }
   .drive video { width: 100%; }
@@ -279,6 +311,7 @@
 
   @media (max-width: 900px) {
     .card, .card:nth-of-type(even) { grid-template-columns: 1fr; padding: 26px 20px; gap: 26px; }
+    .paint-grid { grid-template-columns: 1fr; gap: 36px; }
     .card:nth-of-type(even) .media { order: 0; }
     .media { justify-content: center; }
     .phone { width: 210px; }
@@ -294,7 +327,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .stickers a, .band .track, .rec::before { animation: none; }
-    .card { opacity: 1; translate: none; scale: none; transition: none; }
+    .card, .paint { opacity: 1; translate: none; scale: none; transition: none; }
   }
 </style>
 </head>
@@ -324,8 +357,13 @@
         <a href="#skullsplode" title="Skull Splode" style="--r:-3deg;--d:.8s"><img src="assets/skullsplode/icon.png" alt="Skull Splode"></a>
         <a href="#whogave" title="WhoGave" style="--r:7deg;--d:1.2s"><img src="assets/whogave/icon.png" alt="WhoGave"></a>
         <a href="#airfry" title="AirFry+" style="--r:-5deg;--d:1.6s"><img src="assets/airfry/icon.png" alt="AirFry+"></a>
-        <a href="#pewpew" title="PewPew!" style="--r:4deg;--d:2s"><img src="assets/pewpew/icon.png" alt="PewPew!"></a>
-        <a href="#alexisgone" title="Alex Is Gone" style="--r:-7deg;--d:2.4s"><img src="assets/alexisgone/icon.png" alt="Alex Is Gone"></a>
+        <a href="#roadrage" title="Road Rage" style="--r:6deg;--d:1.8s"><img src="assets/roadrage/icon.png" alt="Road Rage"></a>
+        <a href="#ovi" title="Ovi" style="--r:-4deg;--d:2s"><img src="assets/ovi/icon.svg" alt="Ovi"></a>
+        <a href="#fieldspeak" title="Fieldspeak" style="--r:3deg;--d:2.2s"><img src="assets/fieldspeak/icon.svg" alt="Fieldspeak"></a>
+        <a href="#evpbench" title="EVP Bench" style="--r:-6deg;--d:2.4s"><img src="assets/evpbench/icon.svg" alt="EVP Bench"></a>
+        <a href="#vigil" title="Vigil" style="--r:5deg;--d:2.6s"><img src="assets/vigil/icon.svg" alt="Vigil"></a>
+        <a href="#pewpew" title="PewPew!" style="--r:4deg;--d:2.8s"><img src="assets/pewpew/icon.png" alt="PewPew!"></a>
+        <a href="#alexisgone" title="Alex Is Gone" style="--r:-7deg;--d:3s"><img src="assets/alexisgone/icon.png" alt="Alex Is Gone"></a>
       </div>
     </div>
     <div class="spray-hint">← go on, tag the wall</div>
@@ -333,7 +371,7 @@
 
   <div class="bands" aria-hidden="true">
     <div class="band a"><div class="track">FREE GAMES ★ NO ADS ★ MADE WITH CARE ★ STEAMPUNK MAYHEM ★ COSY PUZZLES ★ GOTHIC ADVENTURES ★ MADE IN AUSTRALIA ★ FREE GAMES ★ NO ADS ★ MADE WITH CARE ★ STEAMPUNK MAYHEM ★ COSY PUZZLES ★ GOTHIC ADVENTURES ★ MADE IN AUSTRALIA ★&nbsp;</div></div>
-    <div class="band b"><div class="track">PAWJONG ✦ EXPLOJONG ✦ SKULL SPLODE ✦ AIRFRY+ ✦ PEWPEW! ✦ ALEX IS GONE ✦ PAWJONG ✦ EXPLOJONG ✦ SKULL SPLODE ✦ AIRFRY+ ✦ PEWPEW! ✦ ALEX IS GONE ✦&nbsp;</div></div>
+    <div class="band b"><div class="track">EXPLOJONG ✦ ROAD RAGE ✦ WHOGAVE ✦ AIRFRY+ ✦ SKULL SPLODE ✦ PAWJONG ✦ OVI ✦ FIELDSPEAK ✦ EVP BENCH ✦ VIGIL ✦ PEWPEW! ✦ ALEX IS GONE ✦ EXPLOJONG ✦ ROAD RAGE ✦ WHOGAVE ✦ AIRFRY+ ✦ SKULL SPLODE ✦ PAWJONG ✦ OVI ✦ FIELDSPEAK ✦ EVP BENCH ✦ VIGIL ✦ PEWPEW! ✦ ALEX IS GONE ✦&nbsp;</div></div>
   </div>
 
   <section id="released">
@@ -470,6 +508,36 @@
         </div>
       </article>
 
+      <article class="card wide" id="roadrage">
+        <div class="media">
+          <div class="screen-wide slides" style="aspect-ratio:16/9">
+            <img class="on" src="assets/roadrage/2.jpg" alt="Road Rage gameplay on Laneway Street">
+            <img src="assets/roadrage/3.jpg" alt="" loading="lazy">
+            <img src="assets/roadrage/6.jpg" alt="" loading="lazy">
+            <img src="assets/roadrage/1.jpg" alt="" loading="lazy">
+          </div>
+        </div>
+        <div class="info">
+          <div class="head">
+            <img class="icon" src="assets/roadrage/icon.png" alt="">
+            <div><h3>Road Rage</h3><div class="tags"><span class="tag">Racing</span><span class="tag">Arcade</span></div></div>
+          </div>
+          <p class="desc">Ram the traffic down comic Aussie main streets. The harder you hit and the faster you are going, the bigger the score. Chain the hits, pick from 13 cars and 12 made-up main streets, and chase a leaderboard that stays on your phone. Cartoon crashes, nobody gets hurt, and there are no ads.</p>
+          <div class="actions">
+            <a class="btn" href="https://play.google.com/store/apps/details?id=com.roadragesmash.app">▶ Google Play</a>
+            <a class="small-link" href="https://docs.google.com/document/d/e/2PACX-1vS3ym1s3qsvl3WCXkl8dPYTFwKUm3jLzYqhDZdHkgS7cuUM0TB-fJXHEDnHv6izo5-oHQtfgxRkWN7j/pub">Privacy policy</a>
+          </div>
+          <div class="shots land">
+            <button><img src="assets/roadrage/1.jpg" alt="Road Rage title screen" loading="lazy"></button>
+            <button><img src="assets/roadrage/2.jpg" alt="Road Rage gameplay on Laneway Street" loading="lazy"></button>
+            <button><img src="assets/roadrage/3.jpg" alt="Road Rage combo on Monsoon Mall" loading="lazy"></button>
+            <button><img src="assets/roadrage/4.jpg" alt="Road Rage car picker" loading="lazy"></button>
+            <button><img src="assets/roadrage/5.jpg" alt="Road Rage street picker" loading="lazy"></button>
+            <button><img src="assets/roadrage/6.jpg" alt="Road Rage gameplay on Harbour Parade" loading="lazy"></button>
+          </div>
+        </div>
+      </article>
+
       <div class="playwall">
         <a class="btn" href="https://play.google.com/store/apps/dev?id=7870936501058079324">All our apps on Google Play →</a>
       </div>
@@ -479,6 +547,40 @@
   <section id="coming">
     <div class="wrap">
       <div class="title" style="--c:var(--purple)"><h2 style="color:#fff">Wet paint</h2><span class="sub">coming soon · in development</span></div>
+
+      <div class="paint-grid">
+        <article class="paint" id="ovi">
+          <div class="head">
+            <img class="icon" src="assets/ovi/icon.svg" alt="">
+            <div><h3>Ovi</h3><div class="tags"><span class="tag soon">Coming soon</span><span class="tag">Word box</span></div></div>
+          </div>
+          <p>A pocket word box. The phone's own sensors pick one entry from a fixed word list: dictionary, phonetic, yes or no, motion, proximity and more. The same reading always lands on the same word.</p>
+        </article>
+
+        <article class="paint" id="fieldspeak">
+          <div class="head">
+            <img class="icon" src="assets/fieldspeak/icon.svg" alt="">
+            <div><h3>Fieldspeak</h3><div class="tags"><span class="tag soon">Coming soon</span><span class="tag">Field meter</span></div></div>
+          </div>
+          <p>A magnetic-field dictionary. Hold the phone still and a change in the field points at one entry in a fixed table, with a live spectrogram beside the word. It reads the environment. It does not write a message.</p>
+        </article>
+
+        <article class="paint" id="evpbench">
+          <div class="head">
+            <img class="icon" src="assets/evpbench/icon.svg" alt="">
+            <div><h3>EVP Bench</h3><div class="tags"><span class="tag soon">Coming soon</span><span class="tag">Audio</span></div></div>
+          </div>
+          <p>A bench for listening. Open a Vigil case or a wav, scrub the spectrogram, loop a moment and mark what you hear. The bench keeps the sound as sound. It never turns noise into words.</p>
+        </article>
+
+        <article class="paint" id="vigil">
+          <div class="head">
+            <img class="icon" src="assets/vigil/icon.svg" alt="">
+            <div><h3>Vigil</h3><div class="tags"><span class="tag soon">Coming soon</span><span class="tag">Field kit</span></div></div>
+          </div>
+          <p>A field kit for one session: recorder, spirit box, evidence camera, light, proximity, knocks and a data log. When the session is done, the case exports as one zip the EVP Bench can open.</p>
+        </article>
+      </div>
 
       <article class="card" id="pewpew">
         <div class="media">
@@ -568,13 +670,13 @@
   // Cards slap onto the wall; videos load and play only while on screen
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     const el = e.target;
-    if (el.classList.contains('card')) { if (e.isIntersecting) el.classList.add('in'); return; }
+    if (el.classList.contains('card') || el.classList.contains('paint')) { if (e.isIntersecting) el.classList.add('in'); return; }
     if (e.isIntersecting) {
       if (!el.src && el.dataset.src) el.src = el.dataset.src;
       if (!reduce) el.play().catch(() => {});
     } else el.pause();
   }), { threshold: 0.15 });
-  document.querySelectorAll('.card, video[data-src]').forEach(el => io.observe(el));
+  document.querySelectorAll('.card, .paint, video[data-src]').forEach(el => io.observe(el));
 
   // Screenshot slideshows inside the phones
   if (!reduce) document.querySelectorAll('.slides').forEach((s, n) => {
